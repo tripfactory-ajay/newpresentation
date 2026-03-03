@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORN - The Credits Revolution | Hotelier Partnership</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        
+        /* Brand Colors */
+        :root {
+            --tripfactory-blue: #1e3a8a;
+            --orn-green: #84cc16;
+            --accent-blue: #3b82f6;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #84cc16 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .brand-bar {
+            background: linear-gradient(90deg, #1e3a8a 0%, #3b82f6 50%, #84cc16 100%);
+            height: 4px;
+            width: 100%;
+        }
+        
+        .tripfactory-blue { color: #1e3a8a; }
+        .bg-tripfactory-blue { background-color: #1e3a8a; }
+        .orn-green { color: #84cc16; }
+        .bg-orn-green { background-color: #84cc16; }
+        .accent-blue { color: #3b82f6; }
+        .bg-accent-blue { background-color: #3b82f6; }
+        
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem 0;
+        }
+        
+        .slide-dark {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+            color: white;
+        }
+        
+        .slide-light {
+            background: #ffffff;
+            color: #1f2937;
+        }
+        
+        .slide-gray {
+            background: #f8fafc;
+            color: #1f2937;
+        }
+        
+        .slide-brand {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+        }
+        
+        .nav-dots {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 40;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .nav-dot.active {
+            background: #84cc16;
+            border-color: white;
+            transform: scale(1.2);
+        }
+        
+        .nav-dot.light {
+            background: rgba(30, 58, 138, 0.3);
+        }
+        
+        .nav-dot.light.active {
+            background: #1e3a8a;
+        }
+        
+        .disruption-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        
+        .disruption-card:hover {
+            transform: translateY(-8px);
+            border-color: #3b82f6;
+            box-shadow: 0 20px 60px rgba(59,130,246,0.15);
+        }
+        
+        .credit-visual {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #84cc16 100%);
+            border-radius: 24px;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .credit-visual::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            border-color: #84cc16;
+            transform: translateY(-4px);
+        }
+        
+        .quote-box {
+            position: relative;
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(30,58,138,0.05) 0%, rgba(132,204,22,0.05) 100%);
+            border-radius: 24px;
+            border-left: 6px solid #84cc16;
+        }
+        
+        .quote-box::before {
+            content: '"';
+            font-size: 8rem;
+            color: #84cc16;
+            opacity: 0.3;
+            position: absolute;
+            top: -1rem;
+            left: 1rem;
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+        
+        .map-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        }
+        
+        .map-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(30,58,138,0.95), transparent);
+            padding: 3rem;
+            color: white;
+        }
+        
+        .how-it-works-step {
+            position: relative;
+            padding-left: 5rem;
+        }
+        
+        .how-it-works-step::before {
+            content: attr(data-step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3.5rem;
+            height: 3.5rem;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 30px rgba(30,58,138,0.3);
+        }
+        
+        .how-it-works-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 1.75rem;
+            top: 3.5rem;
+            width: 3px;
+            height: calc(100% + 2rem);
+            background: linear-gradient(to bottom, #3b82f6, #84cc16);
+        }
+        
+        .benefit-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            background: rgba(132,204,22,0.1);
+            border: 2px solid #84cc16;
+            border-radius: 9999px;
+            color: #1e3a8a;
+            font-weight: 600;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .benefit-pill:hover {
+            background: #84cc16;
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 1.25rem 3rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            font-size: 1.125rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(30,58,138,0.4);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(30,58,138,0.5);
+        }
+        
+        .logo-container {
+            background: white;
+            padding: 0.75rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .brand-accent-line {
+            height: 4px;
+            width: 60px;
+            background: linear-gradient(90deg, #84cc16 0%, #3b82f6 100%);
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Brand Bar -->
+    <div class="brand-bar fixed top-0 w-full z-50"></div>
+
+    <!-- Fixed Header -->
+    <header class="fixed top-4 w-full bg-white/95 backdrop-blur-sm border-b border-gray-100 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center space-x-4">
+                    <div class="logo-container">
+                        <img src="./tripfactory-logo.png" alt="TripFactory" class="h-8 w-auto">
+                    </div>
+                    <div class="text-gray-300">|</div>
+                    <div class="logo-container">
+                        <img src="./orn-logo.png" alt="ORN" class="h-8 w-auto">
+                    </div>
+                    <span class="px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full ml-4">ISO 27001:2022</span>
+                </div>
+                <div class="text-sm font-semibold text-gray-600">
+                    <i class="fas fa-building mr-2 text-green-600"></i>Hotelier Partnership Program
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Dots -->
+    <div class="nav-dots">
+        <div class="nav-dot light active" onclick="scrollToSlide(0)" title="The Revolution"></div>
+        <div class="nav-dot light" onclick="scrollToSlide(1)" title="The Problem"></div>
+        <div class="nav-dot light" onclick="scrollToSlide(2)" title="The Solution"></div>
+        <div class="nav-dot" onclick="scrollToSlide(3)" title="Global Scale"></div>
+        <div class="nav-dot light" onclick="scrollToSlide(4)" title="How It Works"></div>
+        <div class="nav-dot light" onclick="scrollToSlide(5)" title="Your Benefits"></div>
+        <div class="nav-dot" onclick="scrollToSlide(6)" title="The Promise"></div>
+        <div class="nav-dot light" onclick="scrollToSlide(7)" title="Partner With Us"></div>
+    </div>
+
+    <!-- Slide 0: The Revolution - Bold Opening -->
+    <section class="slide slide-dark" id="slide-0">
+        <div class="max-w-6xl mx-auto px-6 lg:px-8 pt-24 text-center">
+            <div class="mb-6">
+                <span class="inline-block px-4 py-2 bg-green-500/20 text-green-400 font-semibold tracking-wider uppercase text-sm rounded-full border border-green-500/30">
+                    The Travel Credits Revolution
+                </span>
+            </div>
+            
+            <h1 class="text-5xl lg:text-7xl font-bold mb-6 leading-tight">
+                Travel Is Broken.<br>
+                <span class="gradient-text">We're Fixing It With Credits.</span>
+            </h1>
+
+            <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                While the industry chases bookings, we built a credits economy that rewards loyalty, 
+                eliminates friction, and puts value back into every traveller's journey—and your property.
+            </p>
+
+            <div class="credit-visual max-w-4xl mx-auto mb-8">
+                <div class="relative z-10 grid md:grid-cols-3 gap-8 text-center">
+                    <div>
+                        <div class="text-5xl font-bold mb-2">AUD 1,000</div>
+                        <div class="text-green-100">Joining Credit</div>
+                    </div>
+                    <div>
+                        <div class="text-5xl font-bold mb-2">Up to 10%</div>
+                        <div class="text-green-100">Cashback on Packages</div>
+                    </div>
+                    <div>
+                        <div class="text-5xl font-bold mb-2">Up to 5%</div>
+                        <div class="text-green-100">Cashback on Hotels</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center space-x-4 text-sm text-gray-400">
+                <span><i class="fas fa-check-circle text-green-500 mr-2"></i>No fine print</span>
+                <span><i class="fas fa-check-circle text-green-500 mr-2"></i>No restrictions</span>
+                <span><i class="fas fa-check-circle text-green-500 mr-2"></i>One global balance</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 1: The Problem - Industry Broken -->
+    <section class="slide slide-light" id="slide-1">
+        <div class="max-w-6xl mx-auto px-6 lg:px-8 pt-24">
+            <div class="text-center mb-12">
+                <span class="text-blue-600 font-semibold tracking-wider uppercase text-sm">The Industry Problem</span>
+                <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mt-4">
+                    Money Isn't Going Towards the Trip.<br>
+                    <span class="text-red-500">Too Many Middlemen.</span>
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-xl mb-6">
+                        <h3 class="font-bold text-red-700 text-lg mb-2">The Traditional Chain</h3>
+                        <p class="text-red-600">Customer → Travel Agent → Local Agent → Sub-agent → Vendor</p>
+                    </div>
+                    
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 text-xl mr-3 mt-1"></i>
+                            <div>
+                                <strong class="text-gray-900">Quality Erosion</strong>
+                                <p class="text-gray-600 text-sm">Too many people dip in, accountability breaks down</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 text-xl mr-3 mt-1"></i>
+                            <div>
+                                <strong class="text-gray-900">Inconsistent Standards</strong>
+                                <p class="text-gray-600 text-sm">Slow escalation, higher complaint risk</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 text-xl mr-3 mt-1"></i>
+                            <div>
+                                <strong class="text-gray-900">Margin Destruction</strong>
+                                <p class="text-gray-600 text-sm">Everyone takes a cut before the traveller even checks in</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="quote-box">
+                    <p class="text-xl text-gray-800 italic relative z-10 leading-relaxed">
+                        We reduce layers. We own the last mile. We operate—we don't broker.
+                    </p>
+                    <p class="mt-4 font-semibold text-green-600">— ORN Operating Philosophy</p>
+                </div>
+            </div>
+
+            <div class="mt-12 bg-gradient-to-r from-blue-900 to-blue-800 rounded-2xl p-8 text-white text-center">
+                <p class="text-2xl font-bold">
+                    Hotels deserve direct relationships with travellers.<br>
+                    <span class="text-green-400">Not intermediaries eating your margins.</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 2: The Solution - Credits Disruption -->
+    <section class="slide slide-gray" id="slide-2">
+        <div class="max-w-6xl mx-auto px-6 lg:px-8 pt-24 text-center">
+            <div class="mb-8">
+                <div class="brand-accent-line mx-auto mb-4"></div>
+                <span class="text-green-600 font-semibold tracking-wider uppercase text-sm">The Disruption</span>
+                <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mt-4">
+                    From Bookings to <span class="gradient-text">Credits Economy</span>
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <div class="disruption-card border-blue-200">
+                    <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-coins text-3xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Credits That Travel</h3>
+                    <p class="text-gray-600">
+                        One balance. One program. Truly global. Not restricted to airline, hotel chain, cruise, or transfer. 
+                        Credits move with the traveller.
+                    </p>
+                </div>
+
+                <div class="disruption-card border-green-200">
+                    <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-sync-alt text-3xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Earn & Burn Loop</h3>
+                    <p class="text-gray-600">
+                        Members earn credits on every trip, burn them on the next. 
+                        Your property becomes part of a recurring travel ecosystem, not a one-off booking.
+                    </p>
+                </div>
+
+                <div class="disruption-card border-blue-200">
+                    <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shield-alt text-3xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Accountable Delivery</h3>
+                    <p class="text-gray-600">
+                        Not just bookings—accountable delivery. We own the last mile. 
+                        Your guests get consistent service, you get direct feedback.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-blue-900 via-blue-800 to-green-600 rounded-2xl p-8 text-white">
+                <h3 class="text-2xl font-bold mb-4">Why This Changes Everything for Hotels</h3>
+                <div class="grid md:grid-cols-4 gap-6 text-center">
+                    <div>
+                        <div class="text-4xl font-bold mb-2">Direct</div>
+                        <div class="text-green-100">Relationship</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold mb-2">Recurring</div>
+                        <div class="text-green-100">Revenue</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold mb-2">Loyal</div>
+                        <div class="text-green-100">Guests</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold mb-2">Protected</div>
+                        <div class="text-green-100">Margins</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 3: Global Scale - With Map -->
+    <section class="slide slide-dark" id="slide-3">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 pt-24 text-center">
+            <div class="mb-8">
+                <span class="text-green-400 font-semibold tracking-wider uppercase text-sm">Global Infrastructure</span>
+                <h2 class="text-4xl lg:text-5xl font-bold mt-4">
+                    We Operate. We Don't Broker.<br>
+                    <span class="text-green-400">5 Continents. 104 Nationalities.</span>
+                </h2>
+            </div>
+
+            <div class="map-container bg-gray-800 mb-8">
+                <img src="./global-map.png" alt="ORN Worldwide Global Map" class="w-full h-auto object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="hidden w-full h-96 bg-gray-800 items-center justify-center text-gray-400">
+                    <div class="text-center">
+                        <i class="fas fa-globe-americas text-6xl mb-4"></i>
+                        <p>Global Map Image (global-map.png)</p>
+                    </div>
+                </div>
+                <div class="map-overlay">
+                    <div class="flex flex-col md:flex-row justify-between items-end">
+                        <div class="text-left">
+                            <h3 class="text-3xl font-bold mb-2">On-Ground Operations</h3>
+                            <p class="text-gray-300 text-lg">Direct execution in 30+ countries</p>
+                        </div>
+                        <div class="mt-4 md:mt-0 text-right">
+                            <div class="text-5xl font-bold text-green-400">250,000+</div>
+                            <div class="text-lg text-gray-300">Customers Handled</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-4 text-left">
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                    <div class="text-green-400 text-3xl font-bold mb-2">Europe</div>
+                    <p class="text-gray-300 text-sm">9 stations, 100+ team, 59 tour buses owned and operated</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                    <div class="text-green-400 text-3xl font-bold mb-2">Middle East</div>
+                    <p class="text-gray-300 text-sm">Dubai, Oman, Bahrain, Istanbul hubs. 24/7 support.</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                    <div class="text-green-400 text-3xl font-bold mb-2">Asia-Pacific</div>
+                    <p class="text-gray-300 text-sm">Melbourne HQ, Bali operations, 20 vehicles on ground</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                    <div class="text-green-400 text-3xl font-bold mb-2">Americas</div>
+                    <p class="text-gray-300 text-sm">64-person US team, Peru & Argentina offices</p>
+                </div>
+            </div>
+
+            <div class="mt-8 bg-green-500/20 border border-green-500/30 rounded-xl p-6">
+                <p class="text-lg text-white">
+                    <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                    <strong>Operational readiness before we sell.</strong> Your property receives guests we've already committed to serving.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 4: How It Works -->
+    <section class="slide slide-light" id="slide-4">
+        <div class="max-w-6xl mx-auto px-6 lg:px-8 pt-24">
+            <div class="text-center mb-12">
+                <div class="brand-accent-line mx-auto mb-4"></div>
+                <span class="text-blue-600 font-semibold tracking-wider uppercase text-sm">Simple & Transparent</span>
+                <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mt-4">
+                    How the Credits Program Works
+                </h2>
+            </div>
+
+            <div class="max-w-3xl mx-auto">
+                <div class="how-it-works-step mb-12" data-step="1">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Partner With ORN</h3>
+                    <p class="text-gray-600 text-lg">Your hotel joins our global credits ecosystem. No setup fees. No complex integration.</p>
+                </div>
+
+                <div class="how-it-works-step mb-12" data-step="2">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Members Receive Joining Credits</h3>
+                    <p class="text-gray-600 text-lg">New members get AUD 1,000 in travel credits—immediately bookable at your property.</p>
+                </div>
+
+                <div class="how-it-works-step mb-12" data-step="3">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Guests Book & Earn More</h3>
+                    <p class="text-gray-600 text-lg">Every stay earns them up to 10% cashback on packages, up to 5% on hotels. They come back.</p>
+                </div>
+
+                <div class="how-it-works-step" data-step="4">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">You Earn Direct Revenue</h3>
+                    <p class="text-gray-600 text-lg">Direct bookings. No intermediary commissions. Recurring guests. Stronger margins.</p>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <div class="inline-flex items-center px-6 py-3 bg-green-100 text-green-800 rounded-full font-semibold">
+                    <i class="fas fa-infinity mr-2"></i>
+                    No limit to credits earned and burned. One balance. Truly global.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 5: Your Benefits -->
+    <section class="slide slide-gray" id="slide-5">
+        <div class="max-w-6xl mx-auto px-6 lg:px-8 pt-24 text-center">
+            <div class="mb-8">
+                <div class="brand-accent-line mx-auto mb-4"></div>
+                <span class="text-green-600 font-semibold tracking-wider uppercase text-sm">Hotelier Advantages</span>
+                <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mt-4">
+                    What You Gain From<br>
+                    <span class="gradient-text">The Credits Revolution</span>
+                </h2>
+            </div>
+
+            <div class="flex flex-wrap justify-center mb-12">
+                <span class="benefit-pill"><i class="fas fa-handshake mr-2"></i>Direct Guest Relationships</span>
+                <span class="benefit-pill"><i class="fas fa-sync mr-2"></i>Recurring Revenue Stream</span>
+                <span class="benefit-pill"><i class="fas fa-shield-alt mr-2"></i>Brand Protection</span>
+                <span class="benefit-pill"><i class="fas fa-chart-line mr-2"></i>Higher Margins</span>
+                <span class="benefit-pill"><i class="fas fa-users mr-2"></i>Loyalty Loop</span>
+                <span class="benefit-pill"><i class="fas fa-globe mr-2"></i>Global Distribution</span>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 text-left">
+                <div class="stat-card">
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-dollar-sign text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Protected Margins</h3>
+                    <p class="text-gray-600">No OTA commissions eating into your revenue. Direct relationship, direct bookings, direct payment.</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-redo text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Repeat Guests</h3>
+                    <p class="text-gray-600">The credits loop keeps travellers coming back. Earn on one trip, burn on the next. Your property benefits.</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-headset text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Operational Support</h3>
+                    <p class="text-gray-600">We handle the complexity—credits management, member support, 24/7 escalation. You focus on hospitality.</p>
+                </div>
+            </div>
+
+            <div class="mt-12 bg-white rounded-2xl p-8 shadow-lg border-2 border-blue-200">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="text-left">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Built for the Australian Market & Beyond</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-center text-gray-700">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                Full Melbourne office + on-ground teams
+                            </li>
+                            <li class="flex items-center text-gray-700">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                Coverage across Australia, NZ & Asia-Pacific
+                            </li>
+                            <li class="flex items-center text-gray-700">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                20 vehicles operating in Bali
+                            </li>
+                            <li class="flex items-center text-gray-700">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                Dedicated handling team for delivery
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-gradient-to-br from-blue-900 to-blue-800 rounded-xl p-6 text-white text-center">
+                        <div class="text-5xl font-bold mb-2">$60B</div>
+                        <div class="text-lg mb-4">HCL Group Backing</div>
+                        <div class="text-sm opacity-90">Enterprise-grade infrastructure. Institutional strength. Global credibility.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 6: The Promise -->
+    <section class="slide slide-brand" id="slide-6">
+        <div class="max-w-5xl mx-auto px-6 lg:px-8 pt-24 text-center">
+            <div class="mb-8">
+                <i class="fas fa-quote-left text-6xl text-white/30 mb-4"></i>
+            </div>
+
+            <h2 class="text-4xl lg:text-5xl font-bold mb-8">
+                Our Promise to Your Property
+            </h2>
+
+            <div class="bg-white/10 backdrop-blur-sm rounded-3xl p-8 mb-8 border border-white/20">
+                <p class="text-2xl lg:text-3xl font-medium leading-relaxed">
+                    "We help your guests travel better, save more, and feel looked after—while strengthening your brand through accountable, direct delivery."
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 text-left">
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                    <i class="fas fa-shield-check text-3xl text-green-400 mb-4"></i>
+                    <h3 class="font-bold text-xl mb-2">Trust & Governance</h3>
+                    <p class="text-blue-100">ISO 27001:2022 certified. Opt-in communication only. Data used strictly for travel fulfillment.</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                    <i class="fas fa-chart-bar text-3xl text-green-400 mb-4"></i>
+                    <h3 class="font-bold text-xl mb-2">Transparency</h3>
+                    <p class="text-blue-100">Monthly performance reporting. Quarterly leadership reviews. Defined escalation ownership.</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                    <i class="fas fa-award text-3xl text-green-400 mb-4"></i>
+                    <h3 class="font-bold text-xl mb-2">Brand Safety</h3>
+                    <p class="text-blue-100">Your reputation is protected through structured delivery, not outsourced to unknown intermediaries.</p>
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-center space-x-8 text-sm font-semibold">
+                <span><i class="fas fa-check-circle text-green-400 mr-2"></i>Lower Complaint Risk</span>
+                <span><i class="fas fa-check-circle text-green-400 mr-2"></i>Faster Resolution</span>
+                <span><i class="fas fa-check-circle text-green-400 mr-2"></i>Controlled Delivery</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 7: Partner With Us - CTA -->
+    <section class="slide slide-light" id="slide-7">
+        <div class="max-w-5xl mx-auto px-6 lg:px-8 pt-24 text-center">
+            <div class="mb-8">
+                <span class="inline-block px-4 py-2 bg-green-100 text-green-800 font-semibold tracking-wider uppercase text-sm rounded-full">
+                    Join the Revolution
+                </span>
+            </div>
+
+            <h2 class="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
+                Become an ORN<br>
+                <span class="gradient-text">Travel Partner</span>
+            </h2>
+
+            <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                Let's explore how the ORN Credits Program can transform your property's distribution, 
+                build guest loyalty, and protect your margins.
+            </p>
+
+            <div class="bg-gradient-to-br from-blue-900 to-blue-800 rounded-3xl p-8 mb-8 text-white">
+                <div class="grid md:grid-cols-3 gap-8 mb-8">
+                    <div class="text-center">
+                        <i class="fas fa-coins text-4xl text-green-400 mb-3"></i>
+                        <div class="font-bold text-lg">Credits Economy</div>
+                        <div class="text-blue-200 text-sm">Not bookings. Value.</div>
+                    </div>
+                    <div class="text-center">
+                        <i class="fas fa-globe-americas text-4xl text-green-400 mb-3"></i>
+                        <div class="font-bold text-lg">Global Reach</div>
+                        <div class="text-blue-200 text-sm">5 continents. Direct.</div>
+                    </div>
+                    <div class="text-center">
+                        <i class="fas fa-handshake text-4xl text-green-400 mb-3"></i>
+                        <div class="font-bold text-lg">Direct Partnership</div>
+                        <div class="text-blue-200 text-sm">No intermediaries.</div>
+                    </div>
+                </div>
+
+                <div class="border-t border-white/20 pt-8">
+                    <h3 class="text-2xl font-bold mb-4">Start the Conversation</h3>
+                    <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
+                        <a href="mailto:sahil.n@ornholidays.com" class="cta-button inline-flex items-center">
+                            <i class="fas fa-envelope mr-3"></i>
+                            sahil.n@ornholidays.com
+                        </a>
+                        <a href="https://www.ornholidays.com" target="_blank" class="text-white hover:text-green-400 transition font-semibold text-lg">
+                            www.ornholidays.com <i class="fas fa-external-link-alt ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center items-center space-x-8 text-gray-500">
+                <div class="flex items-center">
+                    <img src="./tripfactory-logo.png" alt="TripFactory" class="h-8 mr-3 opacity-50">
+                    <span class="font-semibold">TripFactory</span>
+                </div>
+                <div class="text-gray-300">|</div>
+                <div class="flex items-center">
+                    <img src="./orn-logo.png" alt="ORN" class="h-8 mr-3 opacity-50">
+                    <span class="font-semibold">ORN Worldwide</span>
+                </div>
+                <div class="text-gray-300">|</div>
+                <div class="flex items-center">
+                    <i class="fas fa-certificate text-green-600 mr-2"></i>
+                    <span class="font-semibold">ISO 27001:2022</span>
+                </div>
+            </div>
+
+            <p class="mt-8 text-gray-400 text-sm">
+                Part of the $60B HCL Group • Institutional Strength • Global Credibility
+            </p>
+        </div>
+    </section>
+
+    <script>
+        function scrollToSlide(index) {
+            const slide = document.getElementById(`slide-${index}`);
+            if (slide) {
+                slide.scrollIntoView({ behavior: 'smooth' });
+                updateNavDots(index);
+            }
+        }
+
+        function updateNavDots(activeIndex) {
+            const dots = document.querySelectorAll('.nav-dot');
+            const slides = document.querySelectorAll('.slide');
+            
+            dots.forEach((dot, index) => {
+                dot.classList.remove('active');
+                if (index === activeIndex) {
+                    dot.classList.add('active');
+                }
+                
+                const slide = slides[index];
+                if (slide && (slide.classList.contains('slide-light') || slide.classList.contains('slide-gray'))) {
+                    dot.classList.add('light');
+                } else {
+                    dot.classList.remove('light');
+                }
+            });
+        }
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const slideId = entry.target.id;
+                    const index = parseInt(slideId.split('-')[1]);
+                    updateNavDots(index);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.slide').forEach(slide => {
+            observer.observe(slide);
+        });
+
+        updateNavDots(0);
+    </script>
+
+</body>
+</html>
